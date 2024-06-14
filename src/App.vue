@@ -1,25 +1,31 @@
 <script setup>
+import cardTemplet from "./components/cardTemplet.vue";
   import q from "./data/quizes.json";
+
+  import { ref, watch } from "vue";
+
+  const quizes = ref(q)
+
+  const search = ref('')
+
+  watch(search, (val) => {
+    quizes.value = q.filter(quiz => quiz.name.toLowerCase().includes(val.toLowerCase()))
+  })
+
 </script> 
 
 <!-- template -->
 
 <template>
   <div class="container">
-    {{ q }}
     <header>
      <h1>Quize</h1>
-       <input type="text" placeholder="Search...">
+       <input v-model.trim="search" type="text" placeholder="Search...">
     </header>
    
     <div class="options-container">
-      <div class="card">
-        <img src="@/assets/math.jpeg" alt="">
-        <div class="card-text">
-          <h2>Math Quize</h2>
-          <p>15 questions</p>
-        </div>
-      </div>
+
+      <cardTemplet v-for="quiz in quizes" :key="quiz.id" :quiz="quiz" />
     </div>
   </div>
 </template>
@@ -57,37 +63,6 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 40px;
-  }
-
-  .card {
-    width: 310px;
-    overflow: hidden;
-    border-radius: 2%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 35px;
-    margin-right: 20px;
-    cursor: pointer;
-  }
-
-  .card img {
-    width: 100%;
-    height: 190px;
-    margin: 0;
-    object-fit: cover;
-  }
-
-  .card-text {
-    padding: 0 5px;
-  }
-
-  .card-text h2 {
-    font-size: 1.5rem;
-    margin: 10px 0;
-  }
-
-  .card-text p {
-    font-size: 1rem;
-    color: #333;
   }
 </style>
 
