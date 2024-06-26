@@ -1,12 +1,25 @@
-<template>
-     <header>
-      <h4>Question 1/3</h4>
-      <div class="bar">
-        <div class="completion"></div>
-      </div>
-    </header>
-</template>
+<script setup>
+import { defineProps } from 'vue'
 
+const { 
+  questionStatus, 
+  barPercentage 
+} = defineProps(
+  [
+    'questionStatus', 
+    'barPercentage'
+  ]
+  )
+</script>
+
+<template>
+  <header>
+    <h4>{{ questionStatus }}</h4>
+    <div class="bar">
+      <div class="completion" :style="{ width: barPercentage }"></div>
+    </div>
+  </header>
+</template>
 
 <style scoped>
 header {
@@ -19,14 +32,15 @@ header h4 {
 }
 
 .bar {
-  width: 300px;
-  height: 50px;
+  width: 400px;
+  height: 40px;
   border: 3px solid beige;
+  border-radius: 15px;
 }
 
 .completion {
   width: 0%;
   height: 100%;
-  background: beige;
+  background: rgb(235, 235, 177);
 }
 </style>
